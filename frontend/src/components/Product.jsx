@@ -10,11 +10,15 @@ import 'swiper/css/thumbs';
 import ProductImgOne from "../assets/images/Mens/five.jpg"
 import ProductImgTwo from "../assets/images/Mens/six.jpg"
 import ProductImgThree from "../assets/images/Mens/seven.jpg"
+import {Rating} from 'react-simple-star-rating'
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 const Product = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [rating,setRating] =useState(4)
   return (
    <Layout>
-    <div className="container prduct-detail">
+    <div className="container product-detail">
         <div className="row">
             <div className="col-md-12">
                 <nav aria-label="breadcrumb" className='py-4'>
@@ -28,7 +32,7 @@ const Product = () => {
         </div>
         <div className='row'>
             <div className="col-md-5">
-              <div className="row">
+               <div className="row mb-5" >
                 <div className="col-2">
                 <Swiper
                     style={{
@@ -119,7 +123,50 @@ const Product = () => {
               </div>
             </div>
             <div className="col-md-7">
+                <h2>Dummay Product </h2> 
+                <div className='d-flex'>
+                <Rating
+                 size={20}
+                   readonly
+                    initialValue={rating}
+                    /* Available Props */
+                />
+                <span className='p-1 ps-2'>10 Reviews</span>
+                </div>
+                <div className="price h3 py-3">
+                    $20 <span className='text-decoration-line-through'>$18</span>
+                </div>
+                <div>100% Original Products <br />
+                    Pay on delivery might be available <br />
+                    Easy 15 day returns and exchange<br />
+                </div>
+                <div className='pt-3'>
+                    <strong >Select Size</strong>
+                    <div className="size">
+                        <button className="btn btn-size ms-1">S</button>
+                        <button className="btn btn-size  ms-1">M</button>
+                        <button className="btn btn-size  ms-1">L</button>
+                        <button className="btn btn-size ms-1">xL</button>
+                    </div>
+               </div>
+               <div className="add-t-cart my-4">
+                <button className="btn btn-primary text-uppercase"> Add to cart</button>
+               </div>
+               <hr />
+               <div>
+                <strong>SKU</strong>
+                DDXXX224
+               </div>
+            </div>
 
+        </div>
+
+        <div className='row pb-5'>
+            <div className="col-md-12">
+                <Tabs defaultActiveKey="profile" id='uncontrolled-tab-example' className='mb-3'>
+                    <Tab eventKey="home" title="Description">Tab content for Description</Tab>
+                    <Tab eventKey="Profile" title="Reviews(10)">Reviews Area</Tab>
+                </Tabs>
             </div>
         </div>
     </div>
