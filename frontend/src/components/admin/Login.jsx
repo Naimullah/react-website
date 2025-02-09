@@ -1,6 +1,9 @@
 import React from 'react'
 import Layout from '../common/Layout'
 import {useForm} from 'react-hook-form'
+import { apiUrl } from '../common/http';
+import { toast } from 'react-toastify';
+// import {toast} from 'react-toastify'
 const Login = () => {
     const{
         register,
@@ -8,9 +11,31 @@ const Login = () => {
         watch,
         formState:{errors},
     }=useForm();
-    const onSubmit=(data)=>{
+    const onSubmit=async (data)=>{
         console.log(data)
-        const res=fetch()
+        const res=  await fetch(`${apiUrl}/admin/login`,{
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(data)
+        }).than(res=>res.json())
+        .than(result=>{
+            console.log(result)
+            if(result.status==200){
+                const adminInfo={
+                    token:result.token,
+                    id:result.id,
+                    name:result.name
+                }
+                localStorage.setItem('adminInfo',JSON.stringify(adminInfo))
+            }
+            else
+            {
+                // toast.error(result.message);
+                toast.error(result.message)
+            }
+        })
     }
   return (
     <Layout>
