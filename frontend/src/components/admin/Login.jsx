@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { AdminAuthContext } from '../context/AdminAuth';
 const Login = () => {
-    // const {login}=useContext(AdminAuthContext)
+    const {login}=useContext(AdminAuthContext)
     const{
         register,
         handleSubmit,
@@ -35,7 +35,7 @@ const Login = () => {
                     name: result.name
                 };
                 localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
-                // login(adminInfo)
+                login(adminInfo)
                 navigate('/admin/dashboard');
             } else {
                 toast.error(result.message || "Login failed");
