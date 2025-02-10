@@ -12,33 +12,63 @@ const Login = () => {
         formState:{errors},
     }=useForm();
     const navigate=useNavigate();
-    const onSubmit=async (data)=>{
-        console.log(data)
-        const res=  await fetch(`${apiUrl}/admin/login`,{
-            method: 'POST',
-            headers:{
-                'content-type':'application/json'
-            },
-            body:JSON.stringify(data)
-        }).than(res=>res.json())
-        .than(result=>{
-            console.log(result)
-            if(result.status==200){
-                const adminInfo={
-                    token:result.token,
-                    id:result.id,
-                    name:result.name
-                }
-                localStorage.setItem('adminInfo',JSON.stringify(adminInfo))
-                navigate('/admin/dashboard')
+    const onSubmit = async (data) => {
+        try {
+            console.log(data);
+    
+            const res = await fetch(`${apiUrl}/admin/login`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await res.json(); // Convert response to JSON
+    
+            if (res.ok) { // Check HTTP response status
+                const adminInfo = {
+                    token: result.token,
+                    id: result.id,
+                    name: result.name
+                };
+                localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
+                navigate('/admin/dashboard');
+            } else {
+                toast.error(result.message || "Login failed");
             }
-            else
-            {
-                // toast.error(result.message);
-                toast.error(result.message)
-            }
-        })
-    }
+        } catch (error) {
+            console.error("Error logging in:", error);
+            toast.error("Something went wrong. Please try again.");
+        }
+    };
+    // const onSubmit=async (data)=>{
+    //     console.log(data)
+    //     const res=  await fetch(`${apiUrl}/admin/login`,{
+    //         method: 'POST',
+    //         headers:{
+    //             'content-type':'application/json'
+    //         },
+    //         body:JSON.stringify(data)
+    //     }).than(res=>res.json())
+    //     .than(result=>{
+    //         console.log(result)
+    //         if(result.status==200){
+    //             const adminInfo={
+    //                 token:result.token,
+    //                 id:result.id,
+    //                 name:result.name
+    //             }
+    //             localStorage.setItem('adminInfo',JSON.stringify(adminInfo))
+    //             navigate('/admin/dashboard')
+    //         }
+    //         else
+    //         {
+    //             // toast.error(result.message);
+    //             toast.error(result.message)
+    //         }
+    //     })
+    // }
   return (
     <Layout>
         <div className="container d-flex justify-content-center py-5">
