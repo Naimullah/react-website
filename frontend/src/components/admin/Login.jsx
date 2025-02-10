@@ -3,7 +3,7 @@ import Layout from '../common/Layout'
 import {useForm} from 'react-hook-form'
 import { apiUrl } from '../common/http';
 import { toast } from 'react-toastify';
-// import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const{
         register,
@@ -11,6 +11,7 @@ const Login = () => {
         watch,
         formState:{errors},
     }=useForm();
+    const navigate=useNavigate();
     const onSubmit=async (data)=>{
         console.log(data)
         const res=  await fetch(`${apiUrl}/admin/login`,{
@@ -29,6 +30,7 @@ const Login = () => {
                     name:result.name
                 }
                 localStorage.setItem('adminInfo',JSON.stringify(adminInfo))
+                navigate('/admin/dashboard')
             }
             else
             {
